@@ -5,7 +5,7 @@ const projects = [
     id: 1,
     title: "AT&T Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
-    image: "/public/projects/project-att.png",
+    image: "/projects/project-att.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor"],
     demoUrl: "https://www.att.jobs/"
     // githubUrl: "#"
@@ -14,7 +14,7 @@ const projects = [
     id: 2,
     title: "Beth Israel Lahey Health Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
-    image: "/public/projects/project-beth-israel-lahey-health.png",
+    image: "/projects/project-beth-israel-lahey-health.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor"],
     demoUrl: "https://jobs.bilh.org/"
     // githubUrl: "#"
@@ -23,7 +23,7 @@ const projects = [
     id: 3,
     title: "Boston Pizza Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor, Swiper and Fancybox.",
-    image: "/public/projects/project-boston-pizza.png",
+    image: "/projects/project-boston-pizza.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Swiper", "Fancybox"],
     demoUrl: "https://careers.bostonpizza.ca/en"
     // githubUrl: "#"
@@ -32,7 +32,7 @@ const projects = [
     id: 4,
     title: "Dell Technologies Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor and Slick Slider.",
-    image: "/public/projects/project-dell-technologies.png",
+    image: "/projects/project-dell-technologies.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Slick Slider"],
     demoUrl: "https://jobs.dell.com/en"
     // githubUrl: "#"
@@ -41,7 +41,7 @@ const projects = [
     id: 5,
     title: "National Veterinarians Association Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor and Git/Github.",
-    image: "/public/projects/project-nva-general-practice.png",
+    image: "/projects/project-nva-general-practice.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Git/Github"],
     demoUrl: "https://careers.nva.com/"
     // githubUrl: "#"
@@ -50,7 +50,7 @@ const projects = [
     id: 6,
     title: "Petco Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor and Git/Github.",
-    image: "/public/projects/project-petco.png",
+    image: "/projects/project-petco.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Git/Github"],
     demoUrl: "https://careers.petco.com/"
     // githubUrl: "#"
@@ -59,7 +59,7 @@ const projects = [
     id: 7,
     title: "Santander Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor and AOS - Animate On Scroll.",
-    image: "/public/projects/project-santander.png",
+    image: "/projects/project-santander.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "AOS - Animate On Scroll"],
     demoUrl: "https://www.santandercareers.com/"
     // githubUrl: "#"
@@ -68,7 +68,7 @@ const projects = [
     id: 8,
     title: "Synopsys Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript, Razor and Reveal.",
-    image: "/public/projects/project-synopsys.png",
+    image: "/projects/project-synopsys.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Reveal"],
     demoUrl: "https://careers.synopsys.com/"
     // githubUrl: "#"
@@ -77,7 +77,7 @@ const projects = [
     id: 9,
     title: "UPS Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
-    image: "/public/projects/project-ups.png",
+    image: "/projects/project-ups.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor", "Swiper", "Fancybox"],
     demoUrl: "https://www.jobs-ups.com/us/en/"
     // githubUrl: "#"
