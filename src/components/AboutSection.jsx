@@ -29,33 +29,33 @@ export const AboutSection = () => {
 
           <div className="grid grid-cols-1 gap-6">
             <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-center text-center gap-2 md:flex-row md:items-start md:text-left md:gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
                   <Code className="h-7 w-7 text-primary" />
                 </div>
-                <div className="text-left">
+                <div>
                   <h4 className="font-semibold text-lg">Web Development</h4>
                   <p className="text-muted-foreground">Developing responsive web experiences using modern technologies.</p>
                 </div>
               </div>
             </div>
             <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-center text-center gap-2 md:flex-row md:items-start md:text-left md:gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
                   <PersonStanding className="h-7 w-7 text-primary" />
                 </div>
-                <div className="text-left">
+                <div>
                   <h4 className="font-semibold text-lg">Accessibility</h4>
                   <p className="text-muted-foreground">Implementing accessibility best practices that ensure an inclusive experience for all users.</p>
                 </div>
               </div>
             </div>
             <div className="gradient-border p-6 card-hover">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col items-center text-center gap-2 md:flex-row md:items-start md:text-left md:gap-4">
                 <div className="p-3 rounded-full bg-primary/10">
                   <Briefcase className="h-7 w-7 text-primary" />
                 </div>
-                <div className="text-left">
+                <div>
                   <h4 className="font-semibold text-lg">Project Management</h4>
                   <p className="text-muted-foreground">Delivering results through executing projects efficiently from planning to deployment.</p>
                 </div>
