@@ -3,21 +3,27 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react"
 const projects = [
   {
     id: 1,
+    title: "Personal Portfolio Website",
+    description: "A personal portfolio and skills based site built using React, JavaScript, HTML, and TailwindCSS.",
+    image: "/projects/project-personal-website.png",
+    tags: ["React", "JavaScript", "HTML", "TailwindCSS"],
+    demoUrl: "https://www.joshwachsman.com/"
+    // githubUrl: "#"
+  },
+  {
+    // id: 2,
+    // title: "Beth Israel Lahey Health Career Hub",
+    // description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
+    // image: "/projects/project-beth-israel-lahey-health.png",
+    // tags: ["HTML", "SASS", "JavaScript", "Razor"],
+    // demoUrl: "https://jobs.bilh.org/"
+    // githubUrl: "#"
+    id: 2,
     title: "AT&T Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
     image: "/projects/project-att.png",
     tags: ["HTML", "SASS", "JavaScript", "Razor"],
     demoUrl: "https://www.att.jobs/"
-    // githubUrl: "#"
-  },
-  {
-    id: 2,
-    title: "Beth Israel Lahey Health Career Hub",
-    description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
-    image: "/projects/project-beth-israel-lahey-health.png",
-    tags: ["HTML", "SASS", "JavaScript", "Razor"],
-    demoUrl: "https://jobs.bilh.org/"
-    // githubUrl: "#"
   },
   {
     id: 3,
