@@ -3,7 +3,7 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react"
 const projects = [
   {
     id: 1,
-    title: "Personal Portfolio Website",
+    title: "Personal Website",
     description: "A personal portfolio and skills based site built using React, JavaScript, HTML, and TailwindCSS.",
     image: "/projects/project-personal-website.png",
     tags: ["React", "JavaScript", "HTML", "TailwindCSS"],
