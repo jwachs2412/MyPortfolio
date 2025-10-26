@@ -13,7 +13,7 @@ const GAListener = ({ children }) => {
     if (!window.gtag) {
       const script1 = document.createElement("script")
       script1.async = true
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`
+      script1.src = `https://www.googletagmanager.com/gtag/js?id=G-L2VS2BHQZD`
       document.head.appendChild(script1)
 
       const script2 = document.createElement("script")
