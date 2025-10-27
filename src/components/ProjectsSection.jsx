@@ -1,14 +1,12 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react"
-import "../App.scss"
-import "../lib/reveal"
 
 const projects = [
   {
     id: 1,
     title: "Personal Website",
-    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, Reveal, HTML, SCSS and TailwindCSS.",
+    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, HTML, SCSS and TailwindCSS.",
     image: "/projects/project-personal-website.png",
-    tags: ["React", "JavaScript", "jQuery", "Reveal", "HTML", "SCSS", "TailwindCSS"],
+    tags: ["React", "JavaScript", "jQuery", "HTML", "SCSS", "TailwindCSS"],
     demoUrl: "https://www.joshwachsman.com/"
     // githubUrl: "#"
   },
@@ -104,7 +102,7 @@ export const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, key) => (
-            <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover reveal">
+            <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover">
               <div className="h-48 overflow-hidden">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
