@@ -4,7 +4,7 @@ import { cn } from "../lib/utils"
 const skills = [
   // Frontend
   { name: "HTML/CSS", level: 95, category: "fontend" },
-  { name: "SASS", level: 90, category: "frontend" },
+  { name: "SCSS", level: 90, category: "frontend" },
   { name: "Tailwind CSS", level: 15, category: "frontend" },
   { name: "JavaScript", level: 75, category: "frontend" },
   { name: "Typescript", level: 50, category: "frontend" },
