@@ -6,9 +6,9 @@ const projects = [
   {
     id: 1,
     title: "Personal Website",
-    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, HTML, SCSS and TailwindCSS.",
+    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, Reveal, HTML, SCSS and TailwindCSS.",
     image: "/projects/project-personal-website.png",
-    tags: ["React", "JavaScript", "jQuery", "HTML", "SCSS", "TailwindCSS"],
+    tags: ["React", "JavaScript", "jQuery", "Reveal", "HTML", "SCSS", "TailwindCSS"],
     demoUrl: "https://www.joshwachsman.com/"
     // githubUrl: "#"
   },
