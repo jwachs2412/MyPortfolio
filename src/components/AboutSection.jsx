@@ -1,16 +1,11 @@
 import { Briefcase, Code, PersonStanding } from "lucide-react"
-import { ScrollReveal } from "./ScrollReveal"
 import "../App.scss"
-import { useEffect } from "react"
+import { ScrollReveal } from "./ScrollReveal"
 
 export const AboutSection = () => {
-  useEffect(() => {
-    window.addEventListener("scroll", ScrollReveal)
-    return () => window.removeEventListener("scroll", ScrollReveal)
-  }, [])
-
   return (
     <section id="about" className="py-24 px-4 relative reveal">
+      <ScrollReveal />
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           My <span className="text-primary"> Background</span>

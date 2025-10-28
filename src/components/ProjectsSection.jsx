@@ -1,7 +1,6 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react"
 import { ScrollReveal } from "./ScrollReveal"
 import "../App.scss"
-import { useEffect } from "react"
 
 const projects = [
   {
@@ -94,11 +93,6 @@ const projects = [
 ]
 
 export const ProjectsSection = () => {
-  useEffect(() => {
-    window.addEventListener("scroll", ScrollReveal)
-    return () => window.removeEventListener("scroll", ScrollReveal)
-  }, [])
-
   return (
     <section id="projects" className="py-24 px-4 relative">
       <div className="container mx-auto max-w-5xl">
@@ -111,6 +105,7 @@ export const ProjectsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-normal">
           {projects.map((project, key) => (
             <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover reveal reveal-rotateIn">
+              <ScrollReveal />
               <div className="h-48 overflow-hidden">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
