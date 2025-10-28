@@ -1,7 +1,5 @@
 // import { useState } from "react"
 import { Linkedin, Mail, MapPin, Phone, Send } from "lucide-react"
-import { ScrollReveal } from "./ScrollReveal"
-import "../App.scss"
 // import { cn } from "../lib/utils"
 // import { useToast } from "../hooks/use-toast"
 
@@ -24,8 +22,7 @@ export const ConnectSection = () => {
   // }
 
   return (
-    <section id="connect" className="py-24 px-4 relative bg-secondary/30 reveal">
-      <ScrollReveal />
+    <section id="connect" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           Get In <span className="text-primary">Touch</span>

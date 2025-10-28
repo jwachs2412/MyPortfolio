@@ -1,14 +1,12 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react"
-import { ScrollReveal } from "./ScrollReveal"
-import "../App.scss"
 
 const projects = [
   {
     id: 1,
     title: "Personal Website",
-    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, Reveal, HTML, SCSS and TailwindCSS.",
+    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, HTML, SCSS and TailwindCSS.",
     image: "/projects/project-personal-website.png",
-    tags: ["React", "JavaScript", "jQuery", "HTML", "Reveal", "SCSS", "TailwindCSS"],
+    tags: ["React", "JavaScript", "jQuery", "HTML", "SCSS", "TailwindCSS"],
     demoUrl: "https://www.joshwachsman.com/"
     // githubUrl: "#"
   },
@@ -102,10 +100,9 @@ export const ProjectsSection = () => {
 
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">The following projects were developed during my time with my previous employer, with a focus on coding best practices, accessibility compliance, and optimized performance to enhance user experience.</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-normal">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, key) => (
-            <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover reveal-rotateIn">
-              <ScrollReveal />
+            <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover">
               <div className="h-48 overflow-hidden">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
