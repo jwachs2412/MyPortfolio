@@ -29,7 +29,7 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <button onClick={toggleTheme} className={cn("fixed max-sm:hidden top-5 md:top-2 right-1 z-50 p-2 rounded-full transition-colors duration-300", "focus:outlin-none")} aria-label="Toggle Theme">
+    <button onClick={toggleTheme} className={cn("fixed max-sm:hidden top-5 md:top-2 right-1 z-60 p-2 rounded-full transition-colors duration-300", "focus:outline-none")} aria-label="Toggle Theme">
       {isDarkMode ? <Sun className="h-6 w-6 text-yellow-300" /> : <Moon className="h-6 w-6 text-blue-900" />}
     </button>
   )
