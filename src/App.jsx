@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom"
 import { Home } from "./pages/Home"
+import { Sitemap } from "./pages/Sitemap"
 import { NotFound } from "./pages/NotFound"
 import { useEffect } from "react"
 
@@ -41,6 +42,7 @@ function App() {
         <GAListener>
           <Routes>
             <Route index element={<Home />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </GAListener>
