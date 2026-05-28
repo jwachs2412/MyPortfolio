@@ -1,34 +1,42 @@
 import { Toaster } from "@/components/ui/toaster"
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom"
 import { Home } from "./pages/Home"
-import { Sitemap } from "./pages/Sitemap"
 import { NotFound } from "./pages/NotFound"
-import { useEffect } from "react"
+import { lazy, Suspense, useEffect } from "react"
 
-// Component to handle Google Analytics
+const Sitemap = lazy(() => import("./pages/Sitemap").then(m => ({ default: m.Sitemap })))
+
+const GA_ID = "G-L2VS2BHQZD"
+
 const GAListener = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // Load GA script once
-    if (!window.gtag) {
-      const script1 = document.createElement("script")
-      script1.async = true
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=G-L2VS2BHQZD`
-      document.head.appendChild(script1)
+    const loadOrTrack = () => {
+      if (!window.gtag) {
+        const script = document.createElement("script")
+        script.async = true
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`
+        document.head.appendChild(script)
 
-      const script2 = document.createElement("script")
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-L2VS2BHQZD', { page_path: window.location.pathname });
-      `
-      document.head.appendChild(script2)
-    } else {
-      // Track pageview on route change
-      window.gtag("config", "G-L2VS2BHQZD", { page_path: location.pathname })
+        window.dataLayer = window.dataLayer || []
+        window.gtag = function () {
+          window.dataLayer.push(arguments)
+        }
+        window.gtag("js", new Date())
+        window.gtag("config", GA_ID, { page_path: location.pathname })
+      } else {
+        window.gtag("config", GA_ID, { page_path: location.pathname })
+      }
     }
+
+    // Defer analytics until the browser is idle so it never competes with LCP/critical work.
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(loadOrTrack, { timeout: 3000 })
+      return () => window.cancelIdleCallback?.(id)
+    }
+    const id = window.setTimeout(loadOrTrack, 2000)
+    return () => window.clearTimeout(id)
   }, [location])
 
   return children
@@ -40,11 +48,13 @@ function App() {
       <Toaster />
       <BrowserRouter>
         <GAListener>
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/sitemap" element={<Sitemap />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/sitemap" element={<Sitemap />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </GAListener>
       </BrowserRouter>
     </>
