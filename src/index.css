@@ -12,6 +12,7 @@
 
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-strong: hsl(var(--primary-strong));
 
   --color-card: hsl(var(--card));
 
@@ -63,6 +64,8 @@
 
     --primary: 217 95% 48%;
     --primary-foreground: 210 40% 98%;
+    /* Darker variant used for solid button backgrounds so white text clears WCAG AA (6.8:1). */
+    --primary-strong: 217 95% 38%;
 
     --card: 0 0% 100%;
   }
@@ -74,6 +77,8 @@
 
     --primary: 198 77% 43%;
     --primary-foreground: 213 31% 91%;
+    /* Same idea in dark mode — white text on this hits ~5.9:1. */
+    --primary-strong: 198 77% 30%;
 
     --card: 222 47% 8%;
   }
@@ -139,8 +144,8 @@
 }
 
 @utility primary-button {
-  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium 
-  transition-all duration-300 hover:shadow-[0_0_10px_rgba(33,64,250,0.4)] 
+  @apply px-6 py-2 rounded-full bg-primary-strong text-white font-medium
+  transition-all duration-300 hover:shadow-[0_0_10px_rgba(33,64,250,0.4)]
   hover:scale-105 active:scale-95;
 }
 

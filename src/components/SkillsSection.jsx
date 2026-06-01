@@ -49,7 +49,7 @@ export const SkillsSection = () => {
         </h2>
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, key) => (
-            <button key={key} onClick={() => setActiveCategory(category)} className={cn("px-5 py-2 rounded-full transition-colors duration-300 capitalize cursor-pointer", activeCategory === category ? "bg-primary text-primary-foreground" : "bg-secondary/70 text-foreground hover:bd-secondary")}>
+            <button key={key} onClick={() => setActiveCategory(category)} className={cn("px-5 py-2 rounded-full transition-colors duration-300 capitalize cursor-pointer", activeCategory === category ? "bg-primary-strong text-white" : "bg-secondary/70 text-foreground hover:bg-secondary")}>
               {category}
             </button>
           ))}

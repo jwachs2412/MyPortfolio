@@ -76,8 +76,8 @@ export const ConnectSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4">Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a className="hover:text-primary transition-colors" href="https://www.linkedin.com/in/josh-wachsman/" target="_blank">
-                  <Linkedin />
+                <a className="hover:text-primary transition-colors" href="https://www.linkedin.com/in/josh-wachsman/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <Linkedin aria-hidden="true" />
                 </a>
               </div>
             </div>
