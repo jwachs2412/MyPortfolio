@@ -7,6 +7,31 @@ import { lazy, Suspense, useEffect } from "react"
 const Sitemap = lazy(() => import("./pages/Sitemap").then(m => ({ default: m.Sitemap })))
 
 const GA_ID = "G-L2VS2BHQZD"
+const GA_INTERACTION_EVENTS = ["scroll", "click", "keydown", "touchstart", "mousemove"]
+
+// Wait for the user to actually engage before loading GTM/GA. This keeps the
+// script off the critical path entirely. A 10s timeout ensures pageviews still
+// fire for users who load the page and just read it without interacting.
+let gaTriggered = false
+const armGaLoader = load => {
+  if (gaTriggered) {
+    load()
+    return () => {}
+  }
+  const fire = () => {
+    if (gaTriggered) return
+    gaTriggered = true
+    cleanup()
+    load()
+  }
+  const cleanup = () => {
+    GA_INTERACTION_EVENTS.forEach(ev => window.removeEventListener(ev, fire))
+    clearTimeout(timer)
+  }
+  GA_INTERACTION_EVENTS.forEach(ev => window.addEventListener(ev, fire, { once: true, passive: true }))
+  const timer = window.setTimeout(fire, 10000)
+  return cleanup
+}
 
 const GAListener = ({ children }) => {
   const location = useLocation()
@@ -30,13 +55,7 @@ const GAListener = ({ children }) => {
       }
     }
 
-    // Defer analytics until the browser is idle so it never competes with LCP/critical work.
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(loadOrTrack, { timeout: 3000 })
-      return () => window.cancelIdleCallback?.(id)
-    }
-    const id = window.setTimeout(loadOrTrack, 2000)
-    return () => window.clearTimeout(id)
+    return armGaLoader(loadOrTrack)
   }, [location])
 
   return children
