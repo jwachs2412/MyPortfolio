@@ -8,6 +8,18 @@ const Sitemap = lazy(() => import("./pages/Sitemap").then(m => ({ default: m.Sit
 
 const GA_ID = "G-L2VS2BHQZD"
 const GA_INTERACTION_EVENTS = ["scroll", "click", "keydown", "touchstart", "mousemove"]
+const CANONICAL_ORIGIN = "https://www.joshwachsman.com"
+
+const setCanonical = pathname => {
+  const href = `${CANONICAL_ORIGIN}${pathname === "/" ? "/" : pathname.replace(/\/$/, "")}`
+  let link = document.querySelector('link[rel="canonical"]')
+  if (!link) {
+    link = document.createElement("link")
+    link.rel = "canonical"
+    document.head.appendChild(link)
+  }
+  link.href = href
+}
 
 // Wait for the user to actually engage before loading GTM/GA. This keeps the
 // script off the critical path entirely. A 10s timeout ensures pageviews still
@@ -37,6 +49,8 @@ const GAListener = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
+    setCanonical(location.pathname)
+
     const loadOrTrack = () => {
       if (!window.gtag) {
         const script = document.createElement("script")
