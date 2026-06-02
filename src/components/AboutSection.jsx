@@ -17,7 +17,7 @@ export const AboutSection = () => {
             <p className="text-muted-foreground">I've always enjoyed the process of turning complex problems into clear, functional solutions. My work is driven by a desire to build tools and experiences that make life easier for clients and users alike. I'm a coder who's constantly learning new technologies, and I put that knowledge into action by building projects that challenge me to think creatively and grow as a developer.</p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
-              <a href="#contact" className="primary-button">
+              <a href="#connect" className="primary-button">
                 Contact Me
               </a>
 

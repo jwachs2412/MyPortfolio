@@ -104,7 +104,7 @@ export const ProjectsSection = () => {
           {projects.map((project, key) => (
             <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover">
               <div className="h-48 overflow-hidden">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <img src={project.image} alt={`${project.title} — ${project.description}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
               </div>
 
               <div className="p-6">
@@ -121,7 +121,7 @@ export const ProjectsSection = () => {
 
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
-                    <a href={project.demoUrl} target="_blank" className="text-foreground/80 hover:text-primary transition-colors duration-300 after:absolute after:block after:inset-0" aria-label={project.title}>
+                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-primary transition-colors duration-300 after:absolute after:block after:inset-0" aria-label={`Visit ${project.title} (opens in a new tab)`}>
                       <ExternalLink size={20} />
                     </a>
                     {/* <a href={project.githubUrl} target="_blank" className="text-foreground/80 hover:text-primary transition-colors duration-300">
@@ -135,7 +135,7 @@ export const ProjectsSection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <a className="primary-button w-fit flex items-center mx-auto gap-2" target="_blank" href="https://github.com/jwachs2412">
+          <a className="primary-button w-fit flex items-center mx-auto gap-2" target="_blank" rel="noopener noreferrer" href="https://github.com/jwachs2412">
             View My Github <ArrowRight size={16} />
           </a>
         </div>
