@@ -1,94 +1,6 @@
-import { ArrowRight, ExternalLink, Github } from "lucide-react"
-
-const projects = [
-  {
-    id: 1,
-    title: "Personal Website",
-    description: "A personal portfolio and skills based site built using React, JavaScript, jQuery, HTML, SCSS and TailwindCSS.",
-    image: "/projects/project-personal-website.png",
-    tags: ["React", "JavaScript", "jQuery", "HTML", "SCSS", "TailwindCSS"],
-    demoUrl: "https://www.joshwachsman.com/"
-    // githubUrl: "#"
-  },
-  {
-    // id: 2,
-    // title: "Beth Israel Lahey Health Career Hub",
-    // description: "A talent acquisition site built using HTML, SCSS, JavaScript and Razor.",
-    // image: "/projects/project-beth-israel-lahey-health.png",
-    // tags: ["HTML", "SCSS", "JavaScript", "Razor"],
-    // demoUrl: "https://jobs.bilh.org/"
-    // githubUrl: "#"
-    id: 2,
-    title: "AT&T Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript and Razor.",
-    image: "/projects/project-att.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor"],
-    demoUrl: "https://www.att.jobs/"
-  },
-  {
-    id: 3,
-    title: "Boston Pizza Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor, Swiper and Fancybox.",
-    image: "/projects/project-boston-pizza.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Swiper", "Fancybox"],
-    demoUrl: "https://careers.bostonpizza.ca/en"
-    // githubUrl: "#"
-  },
-  {
-    id: 4,
-    title: "Dell Technologies Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Slick Slider.",
-    image: "/projects/project-dell-technologies.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Slick Slider"],
-    demoUrl: "https://jobs.dell.com/en"
-    // githubUrl: "#"
-  },
-  {
-    id: 5,
-    title: "National Veterinarians Association Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Git/Github.",
-    image: "/projects/project-nva-general-practice.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Git/Github"],
-    demoUrl: "https://careers.nva.com/"
-    // githubUrl: "#"
-  },
-  {
-    id: 6,
-    title: "Petco Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Git/Github.",
-    image: "/projects/project-petco.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Git/Github"],
-    demoUrl: "https://careers.petco.com/"
-    // githubUrl: "#"
-  },
-  {
-    id: 7,
-    title: "Santander Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and AOS - Animate On Scroll.",
-    image: "/projects/project-santander.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "AOS - Animate On Scroll"],
-    demoUrl: "https://www.santandercareers.com/"
-    // githubUrl: "#"
-  },
-  {
-    id: 8,
-    title: "Synopsys Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Reveal.",
-    image: "/projects/project-synopsys.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Reveal"],
-    demoUrl: "https://careers.synopsys.com/"
-    // githubUrl: "#"
-  },
-  {
-    id: 9,
-    title: "UPS Career Hub",
-    description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
-    image: "/projects/project-ups.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Swiper", "Fancybox"],
-    demoUrl: "https://www.jobs-ups.com/us/en/"
-    // githubUrl: "#"
-  }
-]
+import { ArrowRight, ExternalLink } from "lucide-react"
+import { Link } from "react-router-dom"
+import { projects } from "../data/caseStudies"
 
 export const ProjectsSection = () => {
   return (
@@ -101,16 +13,16 @@ export const ProjectsSection = () => {
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">The following projects were developed during my time with my previous employer, with a focus on coding best practices, accessibility compliance, and optimized performance to enhance user experience.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, key) => (
-            <div key={key} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover">
+          {projects.map(project => (
+            <div key={project.id} className="relative group bg-card rounded-lg overflow-hidden shadow-xs card-hover">
               <div className="h-48 overflow-hidden">
                 <img src={project.image} alt={`${project.title} — ${project.description}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
               </div>
 
               <div className="p-6">
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, key) => (
-                    <span key={key} className="px-2 py-1 text-xs font-medium bg-primary/30 rounded-full text-secondary-foreground">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="px-2 py-1 text-xs font-medium bg-primary/30 rounded-full text-secondary-foreground">
                       {tag}
                     </span>
                   ))}
@@ -120,13 +32,15 @@ export const ProjectsSection = () => {
                 <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
 
                 <div className="flex justify-between items-center">
-                  <div className="flex space-x-3">
+                  <div className="flex items-center gap-4">
                     <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground/80 hover:text-primary transition-colors duration-300 after:absolute after:block after:inset-0" aria-label={`Visit ${project.title} (opens in a new tab)`}>
                       <ExternalLink size={20} />
                     </a>
-                    {/* <a href={project.githubUrl} target="_blank" className="text-foreground/80 hover:text-primary transition-colors duration-300">
-                      <Github size={20} />
-                    </a> */}
+                    {project.slug && (
+                      <Link to={`/projects/${project.slug}`} className="relative z-10 text-sm font-medium text-primary hover:underline">
+                        Case study →
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

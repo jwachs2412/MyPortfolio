@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { ThemeToggle } from "../components/ThemeToggle"
 import { BlobBackground } from "../components/BlobBackground"
 import { Footer } from "../components/Footer"
+import { caseStudyProjects } from "../data/caseStudies"
+import { useDocumentMeta } from "../hooks/useDocumentMeta"
 
 const sections = [
   { name: "Home", href: "/#hero", description: "Intro and welcome" },
@@ -15,6 +17,11 @@ const sections = [
 const external = [{ name: "GitHub", href: "https://github.com/jwachs2412", description: "My open-source work and repositories" }]
 
 export const Sitemap = () => {
+  useDocumentMeta({
+    title: "Site Map | Josh Wachsman",
+    description: "Browse every section and case study on Josh Wachsman's portfolio site."
+  })
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <ThemeToggle />
@@ -36,6 +43,18 @@ export const Sitemap = () => {
                   <span className="text-lg font-medium text-primary">{item.name}</span>
                   <span className="text-sm text-muted-foreground">{item.description}</span>
                 </a>
+              </li>
+            ))}
+          </ul>
+
+          <h2 className="text-2xl font-semibold mb-6">Case Studies</h2>
+          <ul className="space-y-4 mb-12">
+            {caseStudyProjects.map(project => (
+              <li key={project.slug} className="gradient-border p-5 card-hover">
+                <Link to={`/projects/${project.slug}`} className="flex flex-col">
+                  <span className="text-lg font-medium text-primary">{project.title}</span>
+                  <span className="text-sm text-muted-foreground">{project.description}</span>
+                </Link>
               </li>
             ))}
           </ul>

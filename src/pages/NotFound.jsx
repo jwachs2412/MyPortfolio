@@ -3,8 +3,14 @@ import { ArrowLeft } from "lucide-react"
 import { ThemeToggle } from "../components/ThemeToggle"
 import { BlobBackground } from "../components/BlobBackground"
 import { Footer } from "../components/Footer"
+import { useDocumentMeta } from "../hooks/useDocumentMeta"
 
 export const NotFound = () => {
+  useDocumentMeta({
+    title: "Page Not Found | Josh Wachsman",
+    description: "The page you're looking for doesn't exist. Head back to the homepage to browse Josh Wachsman's portfolio."
+  })
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <ThemeToggle />

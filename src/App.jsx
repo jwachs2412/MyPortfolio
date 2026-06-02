@@ -5,6 +5,7 @@ import { NotFound } from "./pages/NotFound"
 import { lazy, Suspense, useEffect } from "react"
 
 const Sitemap = lazy(() => import("./pages/Sitemap").then(m => ({ default: m.Sitemap })))
+const CaseStudy = lazy(() => import("./pages/CaseStudy").then(m => ({ default: m.CaseStudy })))
 
 const GA_ID = "G-L2VS2BHQZD"
 const GA_INTERACTION_EVENTS = ["scroll", "click", "keydown", "touchstart", "mousemove"]
@@ -85,6 +86,7 @@ function App() {
             <Routes>
               <Route index element={<Home />} />
               <Route path="/sitemap" element={<Sitemap />} />
+              <Route path="/projects/:slug" element={<CaseStudy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

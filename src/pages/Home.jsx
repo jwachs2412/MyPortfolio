@@ -7,8 +7,10 @@ import { SkillsSection } from "../components/SkillsSection"
 import { ProjectsSection } from "../components/ProjectsSection"
 import { ConnectSection } from "../components/ConnectSection"
 import { Footer } from "../components/Footer"
+import { useDocumentMeta } from "../hooks/useDocumentMeta"
 
 export const Home = () => {
+  useDocumentMeta()
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Theme Toggle */}
