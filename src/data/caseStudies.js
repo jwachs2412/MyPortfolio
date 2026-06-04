@@ -160,13 +160,25 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "Git/Github"],
     demoUrl: "https://careers.petco.com/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "February 2025 – May 2025",
+      overview:
+        "Petco needed a career site where candidates could search for open positions and learn more about the company and the roles it offers. I worked on the front-end build at Radancy (formerly TMP Worldwide) alongside a second developer on the engagement.",
+      challenges: [
+        {
+          title: "Two developers, one GitHub repo",
+          body: "This was the first project where I shared the front-end build with another developer while we both pushed to the same GitHub repo. The risk was obvious — without a plan, we could easily overwrite each other's work and lose progress on either side."
+        }
+      ],
+      solutions: [
+        {
+          title: "Branching to stay in our own lanes",
+          body: "This is where branching came into play. We each worked on our own branch instead of pushing straight to a shared one, which kept our changes separate until they were ready to come together. It worked out cleanly — we stayed in our own lanes and never stepped on each other's work."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "The big takeaway here was getting to work alongside another developer and learning how to use branches within GitHub. After using Git solo and then on a team where I was still the only one touching the files, this was the first time the workflow had to actually keep two people from colliding — and branching turned out to be exactly the tool for that."
     }
   },
   {
