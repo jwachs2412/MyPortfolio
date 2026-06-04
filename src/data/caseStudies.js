@@ -131,7 +131,7 @@ export const projects = [
     demoUrl: "https://careers.nva.com/",
     caseStudy: {
       role: "Front-End Developer, Radancy (fka TMP Worldwide)",
-      dates: "June 2024 – August 2024",
+      dates: "August 2024 – October 2024",
       overview:
         "NVA needed a career site where candidates could search for open positions, read up on the different veterinary careers the organization offers, and learn more about the company as a whole. I owned the front-end build at Radancy (formerly TMP Worldwide) as the dedicated developer on the engagement.",
       challenges: [
@@ -215,18 +215,30 @@ export const projects = [
     id: 8,
     slug: "synopsys-careers",
     title: "Synopsys Career Hub",
-    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Reveal.",
+    description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor, Slick Slider and Reveal.",
     image: "/projects/project-synopsys.png",
-    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Reveal"],
+    tags: ["HTML", "SCSS", "JavaScript", "Razor", "Slick Slider", "Reveal"],
     demoUrl: "https://careers.synopsys.com/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "June 2019 – August 2019",
+      overview:
+        "Synopsys needed a career site where candidates could search for open positions and learn more about the company and the roles it offers. I owned the front-end build at Radancy (formerly TMP Worldwide) as the dedicated developer on the engagement.",
+      challenges: [
+        {
+          title: "A data-driven slider on the home page",
+          body: "The biggest obstacle was the slider toward the bottom of the home page. The slider itself was built on Slick Slider, but each slide had to pull the number of open roles in a given country through Razor — and that wasn't a small task. I had to make sure the correct country code was being pulled in for every country represented in the slider."
+        }
+      ],
+      solutions: [
+        {
+          title: "Slick Slider for the UI, careful Razor wiring for the data",
+          body: "Slick Slider handled the slider mechanics and made that part more approachable. The real work was the Razor side — mapping each slide to the right country code so the open-role counts lined up with the correct country, and verifying each one pulled the number it was supposed to."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "The big takeaway here was that working with Razor can be a daunting task, mostly because there isn't much documentation out there to lean on when you get stuck. You end up relying on careful testing and what you can piece together yourself rather than a reference to look it up in."
     }
   },
   {
@@ -238,13 +250,28 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "Swiper", "Fancybox"],
     demoUrl: "https://www.jobs-ups.com/us/en/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
-      metrics: [],
-      lessons: null
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "January 2024 – July 2024",
+      overview:
+        "UPS needed a career site where candidates could search for open positions and learn more about the company and the roles it offers. I owned the front-end build at Radancy (formerly TMP Worldwide), working alongside the broader project team on the engagement.",
+      challenges: [
+        {
+          title: "Rebuilding the entire site mid-project",
+          body: "The biggest obstacle was having to rebuild the whole website. The person at UPS overseeing the build left the company toward the end of the project, and once their replacement settled in, they wanted the entire site rebuilt with a different look and feel. That's a major change to absorb late in an engagement."
+        }
+      ],
+      solutions: [
+        {
+          title: "Reset the timeline, then rebuild from the new designs",
+          body: "To take on a change that size, we got the client to agree to extend the project due date. Once we'd settled on a new deadline, I was tasked with rebuilding the site from the new designs — essentially a second build on top of the first."
+        }
+      ],
+      metrics: [
+        { value: "Site of the Year", label: "Radancy company award" },
+        { value: "Full rebuild", label: "Site rebuilt from new designs mid-project" }
+      ],
+      lessons:
+        "The biggest takeaway here was that clients can change their minds at any point in a project, and it's up to us as a team to adapt to what they need. We pulled it off, and the site went on to win Site of the Year within the company."
     }
   }
 ]
