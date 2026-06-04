@@ -190,13 +190,25 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "AOS - Animate On Scroll"],
     demoUrl: "https://www.santandercareers.com/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "May 2021 – July 2021",
+      overview:
+        "Santander needed a career site where candidates could search for open positions and learn more about the company and the roles it offers. I owned the front-end build at Radancy (formerly TMP Worldwide) as the sole developer on the engagement.",
+      challenges: [
+        {
+          title: "Content lagging behind the build",
+          body: "The biggest obstacle was getting the real content for the pages. The client was going through internal changes, which caused copy and imagery to lag behind the build schedule. Waiting on it would have put the launch date at risk."
+        }
+      ],
+      solutions: [
+        {
+          title: "Build against placeholders, swap in real content later",
+          body: "I built out the pages with placeholder images and Lorem Ipsum text so the structure and layout could move forward without the final copy. When the real content came over, it was just a matter of dropping the actual image or text into a slot that was already built — no rework, no slipped deadline."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "The big takeaway here was learning how to keep the ball rolling on a project without moving the due date. Missing content doesn't have to stall the build — laying in placeholders kept the work progressing, and swapping in the real thing later was the easy part."
     }
   },
   {
