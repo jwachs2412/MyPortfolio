@@ -29,13 +29,32 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor"],
     demoUrl: "https://www.att.jobs/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
-      metrics: [],
-      lessons: null
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "January 2023 – June 2023",
+      overview:
+        "AT&T needed a career site where candidates could search for open positions and learn more about the company and the roles it offers. I owned the front-end build at Radancy (formerly TMP Worldwide) as the dedicated developer on the engagement.",
+      challenges: [
+        {
+          title: "Compressed timeline mid-build",
+          body: "Partway through the project, the client moved their launch date up significantly. The original schedule no longer fit the new deadline, and pulling additional developers in at that point would have spent the saved time on onboarding."
+        }
+      ],
+      solutions: [
+        {
+          title: "Reusable, drop-in sections",
+          body: "I built each major page region — hero blocks, content sections, job grids, calls to action — as self-contained components that could be placed anywhere on any page. Every page after the first reused work I had already shipped, which is what made the new deadline workable as a single developer."
+        },
+        {
+          title: "Targeted overtime",
+          body: "I focused the extra hours on whichever section was about to unblock the next dependency, so design hand-offs and content reviews never had to wait on me."
+        }
+      ],
+      metrics: [
+        { value: "Website of the Year", label: "Radancy company award" },
+        { value: "Solo build", label: "Sole front-end developer" }
+      ],
+      lessons:
+        "Confirmed I can hit a moved-up client deadline on my own without escalating to additional developers. The site went on to win Radancy's Website of the Year — a recognition I was a key part of delivering. The reusable-section pattern has been my go-to starting move on multi-page builds under time pressure ever since."
     }
   },
   {
@@ -47,13 +66,25 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "Swiper", "Fancybox"],
     demoUrl: "https://careers.bostonpizza.ca/en",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "November 2019 – March 2020",
+      overview:
+        "Boston Pizza wanted a refreshed career site where candidates could learn more about the company and search for roles across their footprint. I owned the front-end build at Radancy (formerly TMP Worldwide) as the dedicated developer on the engagement.",
+      challenges: [
+        {
+          title: "New library, live deadline",
+          body: "The home page called for a 'Get to Know Us' slider built on Swiper — a mobile-first slider library I hadn't used before — and the project schedule didn't have an obvious 'learn Swiper' block built into it."
+        }
+      ],
+      solutions: [
+        {
+          title: "Ramp up in isolation before integrating",
+          body: "I prototyped the slider against dummy markup outside the main build, so climbing the learning curve didn't block work on the rest of the site. Once the Swiper API clicked, dropping it into the real page was straightforward."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "The best part of this one was getting to add a new tool to the kit. Swiper turned out to be more approachable than the docs first suggested, and it's stayed in my regular rotation since."
     }
   },
   {

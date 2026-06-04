@@ -42,11 +42,10 @@ export const CaseStudy = () => {
   const { slug } = useParams()
   const project = getProjectBySlug(slug)
 
+  const overview = project?.caseStudy?.overview
   useDocumentMeta({
     title: project ? `${project.title} — Case Study | Josh Wachsman` : undefined,
-    description: project
-      ? `Case study: ${project.title}. ${project.description} Built with ${project.tags.join(", ")}.`
-      : undefined
+    description: project ? overview || `Case study: ${project.title}. ${project.description} Built with ${project.tags.join(", ")}.` : undefined
   })
 
   useCaseStudyJsonLd(project)
