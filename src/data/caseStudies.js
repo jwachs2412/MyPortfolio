@@ -8,6 +8,12 @@
 // lessons) and the page picks them up automatically.
 //
 // Set `slug: null` to opt a project out of having its own case-study route.
+//
+// `lastmod` (YYYY-MM-DD) feeds public/sitemap.xml, which is regenerated from
+// this file on every build by scripts/generate-sitemap.js. Bump a project's
+// lastmod whenever its content meaningfully changes — that's the signal
+// Google uses to decide a page is worth re-crawling. The home page and the
+// HTML /sitemap page inherit the most recent project lastmod automatically.
 
 export const projects = [
   {
@@ -23,6 +29,7 @@ export const projects = [
   {
     id: 2,
     slug: "att-careers",
+    lastmod: "2026-06-02",
     title: "AT&T Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript and Razor.",
     image: "/projects/project-att.png",
@@ -60,6 +67,7 @@ export const projects = [
   {
     id: 3,
     slug: "boston-pizza-careers",
+    lastmod: "2026-06-02",
     title: "Boston Pizza Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor, Swiper and Fancybox.",
     image: "/projects/project-boston-pizza.png",
@@ -90,6 +98,7 @@ export const projects = [
   {
     id: 4,
     slug: "dell-technologies-careers",
+    lastmod: "2026-06-02",
     title: "Dell Technologies Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Slick Slider.",
     image: "/projects/project-dell-technologies.png",
@@ -124,6 +133,7 @@ export const projects = [
   {
     id: 5,
     slug: "nva-careers",
+    lastmod: "2026-06-04",
     title: "National Veterinarians Association Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Git/Github.",
     image: "/projects/project-nva-general-practice.png",
@@ -154,6 +164,7 @@ export const projects = [
   {
     id: 6,
     slug: "petco-careers",
+    lastmod: "2026-06-04",
     title: "Petco Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and Git/Github.",
     image: "/projects/project-petco.png",
@@ -184,6 +195,7 @@ export const projects = [
   {
     id: 7,
     slug: "santander-careers",
+    lastmod: "2026-06-04",
     title: "Santander Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor and AOS - Animate On Scroll.",
     image: "/projects/project-santander.png",
@@ -214,6 +226,7 @@ export const projects = [
   {
     id: 8,
     slug: "synopsys-careers",
+    lastmod: "2026-06-04",
     title: "Synopsys Career Hub",
     description: "A talent acquisition site built using HTML, SCSS, JavaScript, Razor, Slick Slider and Reveal.",
     image: "/projects/project-synopsys.png",
@@ -244,6 +257,7 @@ export const projects = [
   {
     id: 9,
     slug: "ups-careers",
+    lastmod: "2026-06-04",
     title: "UPS Career Hub",
     description: "A talent acquisition site built using HTML, SASS, JavaScript and Razor.",
     image: "/projects/project-ups.png",
