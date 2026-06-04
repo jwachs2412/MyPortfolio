@@ -130,13 +130,25 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "Git/Github"],
     demoUrl: "https://careers.nva.com/",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "June 2024 – August 2024",
+      overview:
+        "NVA needed a career site where candidates could search for open positions, read up on the different veterinary careers the organization offers, and learn more about the company as a whole. I owned the front-end build at Radancy (formerly TMP Worldwide) as the dedicated developer on the engagement.",
+      challenges: [
+        {
+          title: "First team build on a new GitHub workflow",
+          body: "This was one of the first projects where Radancy moved its front-end work into GitHub, and the first time I'd used it on a team rather than for my own personal projects. Other developers needed to be able to pull the project down and pick it up if they were ever assigned to the client, so making sure the most up-to-date files actually lived in the repo — not just on my machine — was the part that mattered most."
+        }
+      ],
+      solutions: [
+        {
+          title: "Treated the repo as the source of truth",
+          body: "I got into a steady habit of committing and pushing as I worked, so the version in GitHub always matched what I had locally. That way anyone pulling the project down was starting from current files instead of chasing whatever was newest on my end."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "The big takeaway here was learning to use GitHub in a team setting. I'd only ever used it solo, where I was the only person touching the files, so it was genuinely interesting to see how collaboration works once a repo has to serve a whole team — and to be part of that shift early on at Radancy."
     }
   },
   {
