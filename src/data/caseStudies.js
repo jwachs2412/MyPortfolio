@@ -96,13 +96,29 @@ export const projects = [
     tags: ["HTML", "SCSS", "JavaScript", "Razor", "Slick Slider"],
     demoUrl: "https://jobs.dell.com/en",
     caseStudy: {
-      role: null,
-      dates: null,
-      overview: null,
-      challenges: [],
-      solutions: [],
+      role: "Front-End Developer, Radancy (fka TMP Worldwide)",
+      dates: "August 2021 – December 2021",
+      overview:
+        "Dell Technologies needed a career site where candidates could search for open roles and learn more about the company. I owned the front-end build at Radancy (formerly TMP Worldwide), working alongside the broader project team on the engagement.",
+      challenges: [
+        {
+          title: "Scope creep throughout the engagement",
+          body: "Dell had a lot of moving parts on their side, which meant change requests showed up mid-build instead of staying inside the original spec. Scope creep is something we normally work hard to avoid, but on a project this size some of it was unavoidable."
+        }
+      ],
+      solutions: [
+        {
+          title: "Absorbed mid-build changes without slipping the schedule",
+          body: "Each change request got worked into my queue as it landed, with timeline impact called out honestly when there was one. The launch date held."
+        },
+        {
+          title: "Team coordination on the fly",
+          body: "When changes touched work beyond the front-end, the team coordinated quickly enough that the rest of the build could keep moving in parallel rather than queueing behind the latest revision."
+        }
+      ],
       metrics: [],
-      lessons: null
+      lessons:
+        "Biggest takeaway from this one was about the team rather than the build itself. Reacting cleanly to mid-project client changes is a lot easier when everyone around you can adapt at the same speed — and Dell was a project where that actually held up under pressure."
     }
   },
   {
