@@ -46,6 +46,30 @@ const armGaLoader = load => {
   return cleanup
 }
 
+// react-router v6 leaves scroll position untouched across client-side
+// navigations. Without this, opening a case study keeps the prior scroll offset
+// (page loads at the bottom), and "Back to Projects" never reaches #projects
+// because nothing scrolls to the anchor. Reset to the hash target — or the top —
+// on every route change. Wait one frame so the destination's sections are laid
+// out before we measure the anchor.
+const ScrollManager = () => {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const target = hash ? document.getElementById(hash.slice(1)) : null
+      if (target) {
+        target.scrollIntoView()
+      } else {
+        window.scrollTo(0, 0)
+      }
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [pathname, hash])
+
+  return null
+}
+
 const GAListener = ({ children }) => {
   const location = useLocation()
 
@@ -81,6 +105,7 @@ function App() {
     <>
       <Toaster />
       <BrowserRouter>
+        <ScrollManager />
         <GAListener>
           <Suspense fallback={null}>
             <Routes>
