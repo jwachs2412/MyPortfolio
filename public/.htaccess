@@ -27,6 +27,16 @@
 </IfModule>
 
 <IfModule mod_headers.c>
+  # Security headers applied to every response.
+  # nosniff: don't let browsers MIME-sniff a response into an unexpected type.
+  Header always set X-Content-Type-Options "nosniff"
+  # Disallow framing by other origins (clickjacking protection).
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # HSTS: force HTTPS for a year incl. subdomains. Safe now that all traffic is https+www.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # Send origin only on cross-origin requests; full URL stays same-origin.
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
   # Hashed Vite bundles in /assets/ are content-addressed and never change — cache hard.
   <FilesMatch "^.+\.(?:css|js|woff2?|ttf|otf|eot)$">
     Header set Cache-Control "public, max-age=31536000, immutable"

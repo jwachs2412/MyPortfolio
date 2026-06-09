@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 
-const DEFAULT_TITLE = "Josh Wachsman — Front-End Web Developer | React, Accessibility, Performance"
+const DEFAULT_TITLE = "Josh Wachsman — Accessible Front-End React Developer"
 const DEFAULT_DESCRIPTION =
-  "Josh Wachsman is a front-end web developer with 10+ years of experience building fast, accessible, WCAG-compliant React interfaces. Portfolio of career-site work for AT&T, Dell, UPS, Petco, Santander and more."
+  "Front-end web developer with 10+ years building fast, accessible, WCAG-compliant React interfaces for AT&T, Dell, UPS, Petco and Santander."
 
 const setMeta = (name, content) => {
   const el = document.querySelector(`meta[name="${name}"]`)
