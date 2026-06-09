@@ -2,6 +2,21 @@
   RewriteEngine On
   RewriteBase /
 
+  # Canonical origin: force HTTPS + www so every URL resolves to one host.
+  # Without this, https://joshwachsman.com/... returns a 200 that is a byte-for-byte
+  # duplicate of https://www.joshwachsman.com/..., which is what Google Search Console
+  # reports as "Duplicate without user-selected canonical". The 301 consolidates the
+  # apex (and any http) URLs onto the indexable www origin in a single hop.
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+  RewriteRule ^ https://www.%1%{REQUEST_URI} [L,R=301]
+
+  # Collapse /index.html to / so the home page has a single canonical URL. THE_REQUEST
+  # only matches a literal browser request, so the SPA's internal rewrite below never loops.
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [L,R=301]
+
   # Serve existing files and directories as-is (assets, images, robots.txt, sitemap.xml)
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
