@@ -58,9 +58,11 @@ const caseStudyList = caseStudyProjects
   .map(p => `            <li><a href="/projects/${p.slug}">${escText(p.title)}</a></li>`)
   .join("\n")
 
-const homeNoscript = title => `<noscript>
+// h1 mirrors the rendered hero so the non-JS H1 differs from the <title> (and
+// matches what JS-rendering crawlers and users see).
+const homeNoscript = () => `<noscript>
       <header>
-        <h1>${escText(title)}</h1>
+        <h1>Hi, I'm Josh Wachsman</h1>
         <p>
           I'm a front-end web developer with 10+ years of experience building fast,
           accessible, WCAG-compliant React interfaces. This portfolio collects career-site
@@ -103,11 +105,13 @@ ${caseStudyList}
       </main>
     </noscript>`
 
-const projectNoscript = project => `<noscript>
+const projectNoscript = project => {
+  const overview = project.caseStudy?.overview
+  return `<noscript>
       <header>
         <h1>${escText(project.title)}</h1>
         <p>${escText(project.description)}</p>
-${primaryNav}
+${overview ? `        <p>${escText(overview)}</p>\n` : ""}${primaryNav}
       </header>
       <main>
         <section aria-labelledby="more-heading">
@@ -119,9 +123,10 @@ ${caseStudyList}
         <p><a href="/#projects">Back to all projects</a></p>
       </main>
     </noscript>`
+}
 
 const noscriptFor = route => {
-  if (route.kind === "home") return homeNoscript(route.meta.title)
+  if (route.kind === "home") return homeNoscript()
   if (route.kind === "sitemap") return sitemapNoscript
   return projectNoscript(route.project)
 }

@@ -25,11 +25,16 @@ const len = s => [...s].length
 
 const canonicalFor = path => `${ORIGIN}${path === "/" ? "/" : path.replace(/\/$/, "")}`
 
-// Prefer the branded "<Title> — Josh Wachsman" form, but fall back to the bare
-// title when branding would push it over the 60-char limit (e.g. the long NVA name).
+// Prefer the branded "<Title> — Josh Wachsman" form. When that exceeds 60 chars,
+// fall back to "<Title> — Case Study" (shorter, still distinct from the page's H1),
+// and only as a last resort the bare title. The suffix matters: a title identical
+// to the H1 is a wasted SEO signal, so we keep them different wherever length allows.
 const titleFor = title => {
   const branded = `${title} — Josh Wachsman`
-  return len(branded) <= TITLE_MAX ? branded : title
+  if (len(branded) <= TITLE_MAX) return branded
+  const labelled = `${title} — Case Study`
+  if (len(labelled) <= TITLE_MAX) return labelled
+  return title
 }
 
 // Unique, bounded description. Prefixing with the (unique) project title keeps
@@ -70,7 +75,7 @@ const homeMeta = () => ({
 
 const sitemapMeta = () => ({
   path: "/sitemap",
-  title: "Site Map | Josh Wachsman",
+  title: "Site Map — Josh Wachsman Portfolio",
   description: "Browse every section and case study on Josh Wachsman's portfolio site.",
   canonical: canonicalFor("/sitemap"),
   ogImage: OG_IMAGE,
