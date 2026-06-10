@@ -54,37 +54,53 @@ const primaryNav = `        <nav aria-label="Primary">
           </ul>
         </nav>`
 
+// Titles only — used in a case study's "More case studies" list (that page
+// already carries its own full content below).
 const caseStudyList = caseStudyProjects
   .map(p => `            <li><a href="/projects/${p.slug}">${escText(p.title)}</a></li>`)
   .join("\n")
+
+// Title + description — used on the home and sitemap fallbacks so the raw HTML
+// carries real, per-project descriptive text (not just a link).
+const caseStudyListDetailed = caseStudyProjects
+  .map(p => `            <li><a href="/projects/${p.slug}">${escText(p.title)}</a> — ${escText(p.description)}</li>`)
+  .join("\n")
+
+const sectionList = [
+  ["/#about", "About", "My background and what I do"],
+  ["/#skills", "Skills", "The technologies and tools I work with"],
+  ["/#projects", "Projects", "Featured career-site work and case studies"],
+  ["/#connect", "Connect", "Ways to get in touch"]
+]
+  .map(([href, name, desc]) => `            <li><a href="${href}">${name}</a> — ${desc}</li>`)
+  .join("\n")
+
+const intro = `I'm a front-end web developer with 10+ years of experience building fast,
+          accessible, WCAG-compliant React interfaces. I focus on accessibility and
+          performance — semantic HTML, components that meet WCAG standards, and quick-loading
+          pages — and this portfolio collects the career-site work I've built for major brands,
+          each with a written case study covering the brief, the constraints, and what I shipped.`
 
 // h1 mirrors the rendered hero so the non-JS H1 differs from the <title> (and
 // matches what JS-rendering crawlers and users see).
 const homeNoscript = () => `<noscript>
       <header>
         <h1>Hi, I'm Josh Wachsman</h1>
-        <p>
-          I'm a front-end web developer with 10+ years of experience building fast,
-          accessible, WCAG-compliant React interfaces. This portfolio collects career-site
-          work I've built for major brands, with written case studies on each.
-        </p>
+        <p>${intro}</p>
 ${primaryNav}
       </header>
       <main>
         <section aria-labelledby="case-studies-heading">
           <h2 id="case-studies-heading">Case studies</h2>
           <ul>
-${caseStudyList}
+${caseStudyListDetailed}
           </ul>
         </section>
-        <section aria-labelledby="about-heading">
-          <h2 id="about-heading">About</h2>
-          <p>
-            I focus on accessibility and performance: semantic HTML, WCAG-compliant
-            components, and fast-loading React. Enable JavaScript to view the full
-            interactive portfolio, or use the <a href="/sitemap">site map</a> to browse
-            every section and case study.
-          </p>
+        <section aria-labelledby="sections-heading">
+          <h2 id="sections-heading">Sections</h2>
+          <ul>
+${sectionList}
+          </ul>
         </section>
       </main>
     </noscript>`
@@ -92,28 +108,48 @@ ${caseStudyList}
 const sitemapNoscript = `<noscript>
       <header>
         <h1>Site Map</h1>
-        <p>Every section and case study on this site. Enable JavaScript for the full interactive view.</p>
+        <p>${intro}</p>
 ${primaryNav}
       </header>
       <main>
+        <section aria-labelledby="sections-heading">
+          <h2 id="sections-heading">Sections</h2>
+          <ul>
+${sectionList}
+          </ul>
+        </section>
         <section aria-labelledby="case-studies-heading">
           <h2 id="case-studies-heading">Case studies</h2>
           <ul>
-${caseStudyList}
+${caseStudyListDetailed}
           </ul>
         </section>
       </main>
     </noscript>`
 
+// Emit the full case-study narrative (overview, challenges, solutions, lessons)
+// as real text, so the raw HTML is a genuine text version of the rendered page.
+const para = (label, text) => `        <p>${label ? `<strong>${escText(label)}.</strong> ` : ""}${escText(text)}</p>`
+
 const projectNoscript = project => {
-  const overview = project.caseStudy?.overview
+  const cs = project.caseStudy || {}
+  const body = [
+    cs.overview ? para("", cs.overview) : "",
+    ...(cs.challenges || []).map(c => para(c.title, c.body)),
+    ...(cs.solutions || []).map(s => para(s.title, s.body)),
+    cs.lessons ? para("What I took away", cs.lessons) : ""
+  ]
+    .filter(Boolean)
+    .join("\n")
+
   return `<noscript>
       <header>
         <h1>${escText(project.title)}</h1>
         <p>${escText(project.description)}</p>
-${overview ? `        <p>${escText(overview)}</p>\n` : ""}${primaryNav}
+${primaryNav}
       </header>
       <main>
+${body}
         <section aria-labelledby="more-heading">
           <h2 id="more-heading">More case studies</h2>
           <ul>
