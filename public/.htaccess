@@ -17,10 +17,23 @@
   RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
   RewriteRule ^index\.html$ / [L,R=301]
 
+  # Any direct request for a prerendered *.html file 301s to its clean,
+  # extensionless URL, so each page has exactly one indexable URL (no /foo.html
+  # duplicate of /foo). THE_REQUEST is the literal request line, so the internal
+  # rewrite further down never triggers this redirect.
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [L,R=301]
+
   # Serve existing files and directories as-is (assets, images, robots.txt, sitemap.xml)
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
+
+  # Serve the build-time prerendered HTML at clean URLs. Each route (/sitemap,
+  # /projects/<slug>) has a matching <path>.html carrying the correct per-page
+  # <head> and content. Unknown paths fall through to the SPA (client renders 404).
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
 
   # Otherwise, hand routing to the SPA so client-side routes work on direct load/refresh
   RewriteRule ^ index.html [L]

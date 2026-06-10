@@ -79,56 +79,7 @@
     </script>
   </head>
   <body>
-    <!--
-      Static fallback for crawlers and clients that do not execute JavaScript.
-      The React app replaces nothing here (it mounts into #root); this <noscript>
-      gives non-rendering crawlers a real h1, headings, body copy and internal
-      links so the page is never seen as empty/orphaned. Per-route static head
-      and content is handled by the build-time prerender step.
-    -->
-    <noscript>
-      <header>
-        <h1>Josh Wachsman — Accessible Front-End React Developer</h1>
-        <p>
-          I'm a front-end web developer with 10+ years of experience building fast,
-          accessible, WCAG-compliant React interfaces. This portfolio collects career-site
-          work I've built for major brands, with written case studies on each.
-        </p>
-        <nav aria-label="Primary">
-          <ul>
-            <li><a href="/#about">About</a></li>
-            <li><a href="/#skills">Skills</a></li>
-            <li><a href="/#projects">Projects</a></li>
-            <li><a href="/#connect">Connect</a></li>
-            <li><a href="/sitemap">Site map</a></li>
-          </ul>
-        </nav>
-      </header>
-      <main>
-        <section aria-labelledby="case-studies-heading">
-          <h2 id="case-studies-heading">Case studies</h2>
-          <ul>
-            <li><a href="/projects/att-careers">AT&amp;T Career Hub</a></li>
-            <li><a href="/projects/boston-pizza-careers">Boston Pizza Career Hub</a></li>
-            <li><a href="/projects/dell-technologies-careers">Dell Technologies Career Hub</a></li>
-            <li><a href="/projects/nva-careers">National Veterinarians Association Career Hub</a></li>
-            <li><a href="/projects/petco-careers">Petco Career Hub</a></li>
-            <li><a href="/projects/santander-careers">Santander Career Hub</a></li>
-            <li><a href="/projects/synopsys-careers">Synopsys Career Hub</a></li>
-            <li><a href="/projects/ups-careers">UPS Career Hub</a></li>
-          </ul>
-        </section>
-        <section aria-labelledby="about-heading">
-          <h2 id="about-heading">About</h2>
-          <p>
-            I focus on accessibility and performance: semantic HTML, WCAG-compliant
-            components, and fast-loading React built with modern CSS and Tailwind. Enable
-            JavaScript to view the full interactive portfolio, or use the
-            <a href="/sitemap">site map</a> to browse every section and case study.
-          </p>
-        </section>
-      </main>
-    </noscript>
+    <!-- PRERENDER:NOSCRIPT -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

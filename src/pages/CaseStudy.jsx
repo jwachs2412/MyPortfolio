@@ -6,34 +6,26 @@ import { BlobBackground } from "../components/BlobBackground"
 import { Footer } from "../components/Footer"
 import { getProjectBySlug } from "../data/caseStudies"
 import { useDocumentMeta } from "../hooks/useDocumentMeta"
+import { metaForPath } from "../lib/seo"
 import { NotFound } from "./NotFound"
 
-const ORIGIN = "https://www.joshwachsman.com"
-
-// Inject a CreativeWork JSON-LD block while the case-study page is mounted,
-// then remove it on unmount so other routes don't inherit project metadata.
-const useCaseStudyJsonLd = project => {
+// Keep the CreativeWork JSON-LD in sync with whatever is mounted. The prerender
+// step bakes a <script data-casestudy> into the static HTML, so reuse that node
+// if present (avoids a duplicate block), update it on SPA navigation, and remove
+// it on unmount so other routes don't inherit a stale project's structured data.
+const useCaseStudyJsonLd = (project, jsonLd) => {
   useEffect(() => {
-    if (!project) return
-    const data = {
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      name: `${project.title} — Case Study`,
-      url: `${ORIGIN}/projects/${project.slug}`,
-      image: `${ORIGIN}${project.image}`,
-      description: project.description,
-      author: { "@id": `${ORIGIN}/#person` },
-      keywords: project.tags.join(", ")
+    if (!project || !jsonLd) return
+    let script = document.querySelector("script[data-casestudy]")
+    if (!script) {
+      script = document.createElement("script")
+      script.type = "application/ld+json"
+      document.head.appendChild(script)
     }
-    const script = document.createElement("script")
-    script.type = "application/ld+json"
     script.dataset.casestudy = project.slug
-    script.text = JSON.stringify(data)
-    document.head.appendChild(script)
-    return () => {
-      script.remove()
-    }
-  }, [project])
+    script.text = JSON.stringify(jsonLd)
+    return () => script.remove()
+  }, [project, jsonLd])
 }
 
 const Placeholder = ({ children }) => <p className="text-sm text-muted-foreground italic">{children}</p>
@@ -42,13 +34,10 @@ export const CaseStudy = () => {
   const { slug } = useParams()
   const project = getProjectBySlug(slug)
 
-  const overview = project?.caseStudy?.overview
-  useDocumentMeta({
-    title: project ? `${project.title} — Case Study | Josh Wachsman` : undefined,
-    description: project ? overview || `Case study: ${project.title}. ${project.description} Built with ${project.tags.join(", ")}.` : undefined
-  })
+  const meta = project ? metaForPath(`/projects/${project.slug}`) : null
+  useDocumentMeta(meta || {})
 
-  useCaseStudyJsonLd(project)
+  useCaseStudyJsonLd(project, meta?.jsonLd)
 
   if (!project) return <NotFound />
 

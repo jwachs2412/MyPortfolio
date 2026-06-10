@@ -5,6 +5,7 @@ import { BlobBackground } from "../components/BlobBackground"
 import { Footer } from "../components/Footer"
 import { caseStudyProjects } from "../data/caseStudies"
 import { useDocumentMeta } from "../hooks/useDocumentMeta"
+import { metaForPath } from "../lib/seo"
 
 const sections = [
   { name: "Home", href: "/#hero", description: "Intro and welcome" },
@@ -17,10 +18,7 @@ const sections = [
 const external = [{ name: "GitHub", href: "https://github.com/jwachs2412", description: "My open-source work and repositories" }]
 
 export const Sitemap = () => {
-  useDocumentMeta({
-    title: "Site Map | Josh Wachsman",
-    description: "Browse every section and case study on Josh Wachsman's portfolio site."
-  })
+  useDocumentMeta(metaForPath("/sitemap"))
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
