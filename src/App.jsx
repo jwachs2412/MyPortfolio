@@ -1,4 +1,3 @@
-import { Toaster } from "@/components/ui/toaster"
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom"
 import { Home } from "./pages/Home"
 import { NotFound } from "./pages/NotFound"
@@ -102,9 +101,7 @@ const GAListener = ({ children }) => {
 
 function App() {
   return (
-    <>
-      <Toaster />
-      <BrowserRouter>
+    <BrowserRouter>
         <ScrollManager />
         <GAListener>
           <Suspense fallback={null}>
@@ -117,7 +114,6 @@ function App() {
           </Suspense>
         </GAListener>
       </BrowserRouter>
-    </>
   )
 }
 

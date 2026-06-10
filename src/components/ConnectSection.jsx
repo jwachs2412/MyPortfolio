@@ -1,26 +1,6 @@
-// import { useState } from "react"
-import { Linkedin, Mail, MapPin, Phone, Send } from "lucide-react"
-// import { cn } from "../lib/utils"
-// import { useToast } from "../hooks/use-toast"
+import { Linkedin, Mail, MapPin, Phone } from "lucide-react"
 
 export const ConnectSection = () => {
-  // const { toast } = useToast()
-  // const [isSubmitting, setIsSubmitting] = useState(false)
-
-  // const handleSubmit = e => {
-  //   e.preventDefault()
-
-  //   setIsSubmitting(true)
-
-  //   setTimeout(() => {
-  //     toast({
-  //       title: "Message sent!",
-  //       description: "Thank you for your message. I'll be in touch with you soon."
-  //     })
-  //     setIsSubmitting(false)
-  //   }, 1500)
-  // }
-
   return (
     <section id="connect" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
