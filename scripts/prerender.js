@@ -82,10 +82,11 @@ const intro = `I'm a front-end web developer with 10+ years of experience buildi
           each with a written case study covering the brief, the constraints, and what I shipped.`
 
 // h1 mirrors the rendered hero so the non-JS H1 differs from the <title> (and
-// matches what JS-rendering crawlers and users see).
+// matches what JS-rendering crawlers and users see). No <h1> here: the home page's
+// h1 lives in the static #root LCP shell (injected below), so adding one here too
+// would give the raw HTML two h1s. Other routes keep their noscript h1 (empty #root).
 const homeNoscript = () => `<noscript>
       <header>
-        <h1>Hi, I'm Josh Wachsman</h1>
         <p>${intro}</p>
 ${primaryNav}
       </header>
@@ -167,6 +168,30 @@ const noscriptFor = route => {
   return projectNoscript(route.project)
 }
 
+// ---- LCP shell -----------------------------------------------------------
+//
+// Paint the home page's LCP element (the hero <h1>) from static HTML so it shows
+// at first paint using the already-inlined CSS, instead of waiting ~900ms for the
+// JS bundle to download and render. createRoot() (not hydrateRoot) replaces #root
+// on mount, so this is a throwaway placeholder, not hydrated markup — React renders
+// the identical hero over it with no flash. It mirrors HeroSection's markup exactly,
+// with the tagline/button kept as opacity-0 (no animation) purely to reserve the
+// same vertical space so the <h1> doesn't shift when React takes over. The <h1>
+// itself carries no opacity/animation, so it is a valid LCP candidate immediately.
+const homeShell = `<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4">
+      <div class="container max-w-4xl mx-auto text-center z-10">
+        <div class="space-y-6">
+          <h1 class="text-4xl md:text-6xl font-bold tracking-tight">
+            <span>Hi, I'm</span>
+            <span class="text-primary"> Josh</span>
+            <span class="text-gradient"> Wachsman</span>
+          </h1>
+          <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0">I build modern, accessible, and performant web interfaces using current front-end technologies, delivering experiences that meet WCAG standards and emphasize usability.</p>
+          <div class="pt-4 opacity-0"><a href="#projects" class="primary-button">View My Work</a></div>
+        </div>
+      </div>
+    </section>`
+
 // ---- render one route ----------------------------------------------------
 
 const render = (template, route) => {
@@ -193,6 +218,12 @@ const render = (template, route) => {
   }
 
   html = replaceOnce(html, /<!-- PRERENDER:NOSCRIPT -->/g, () => noscriptFor(route), "noscript marker")
+
+  // Inject the static LCP shell into #root for the home page (other routes keep
+  // an empty #root — their content is client-rendered as before).
+  if (route.kind === "home") {
+    html = replaceOnce(html, /<div id="root"><\/div>/g, () => `<div id="root">${homeShell}</div>`, "#root (home shell)")
+  }
 
   return html
 }
