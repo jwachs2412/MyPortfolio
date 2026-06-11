@@ -211,9 +211,12 @@ const render = (template, route) => {
   html = setMetaContent(html, 'name="twitter:description"', meta.description, "twitter:description")
   html = setMetaContent(html, 'name="twitter:image"', meta.ogImage, "twitter:image")
 
-  // Per-route CreativeWork JSON-LD, just before </head> (case studies only).
+  // Per-route JSON-LD, just before </head>. Case studies get CreativeWork +
+  // BreadcrumbList (the hook reuses the data-casestudy node on hydration); the
+  // home page gets a ProfilePage. Other routes have none.
   if (meta.jsonLd) {
-    const block = `  <script type="application/ld+json" data-casestudy="${escAttr(route.project.slug)}">${jsonLdSafe(meta.jsonLd)}</script>\n  </head>`
+    const attr = route.kind === "project" ? `data-casestudy="${escAttr(route.project.slug)}"` : `data-jsonld="${route.kind}"`
+    const block = `  <script type="application/ld+json" ${attr}>${jsonLdSafe(meta.jsonLd)}</script>\n  </head>`
     html = replaceOnce(html, /\s*<\/head>/, () => "\n" + block, "json-ld insertion point (</head>)")
   }
 

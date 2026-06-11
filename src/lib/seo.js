@@ -44,15 +44,43 @@ const caseStudyDescription = project => {
   return len(full) <= DESCRIPTION_MAX ? full : `${[...full].slice(0, DESCRIPTION_MAX - 1).join("")}…`
 }
 
+// CreativeWork (the case study itself) + a BreadcrumbList (Home › Projects › this
+// page). Breadcrumbs can render as a breadcrumb trail in Google results, which
+// improves how the listing looks and its click-through.
 const caseStudyJsonLd = project => ({
   "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  name: `${project.title} — Case Study`,
-  url: `${ORIGIN}/projects/${project.slug}`,
-  image: `${ORIGIN}${project.image}`,
-  description: project.description,
-  author: { "@id": `${ORIGIN}/#person` },
-  keywords: project.tags.join(", ")
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      name: `${project.title} — Case Study`,
+      url: `${ORIGIN}/projects/${project.slug}`,
+      image: `${ORIGIN}${project.image}`,
+      description: project.description,
+      author: { "@id": `${ORIGIN}/#person` },
+      keywords: project.tags.join(", ")
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${ORIGIN}/` },
+        { "@type": "ListItem", position: 2, name: "Projects", item: `${ORIGIN}/#projects` },
+        { "@type": "ListItem", position: 3, name: project.title, item: `${ORIGIN}/projects/${project.slug}` }
+      ]
+    }
+  ]
+})
+
+// The home page is Josh's profile page. ProfilePage (with the Person as mainEntity)
+// helps Google treat the site as a person entity — Knowledge Panel eligibility.
+const profilePageJsonLd = () => ({
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${ORIGIN}/#profilepage`,
+  url: `${ORIGIN}/`,
+  name: DEFAULT_TITLE,
+  isPartOf: { "@id": `${ORIGIN}/#website` },
+  about: { "@id": `${ORIGIN}/#person` },
+  mainEntity: { "@id": `${ORIGIN}/#person` }
 })
 
 const caseStudyMeta = project => ({
@@ -70,7 +98,7 @@ const homeMeta = () => ({
   description: DEFAULT_DESCRIPTION,
   canonical: canonicalFor("/"),
   ogImage: OG_IMAGE,
-  jsonLd: null
+  jsonLd: profilePageJsonLd()
 })
 
 const sitemapMeta = () => ({
