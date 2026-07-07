@@ -1,13 +1,20 @@
 // Build-time prerender: turn the single built dist/index.html into one static
 // HTML file per route, each with the correct <head> (title, description,
-// canonical, Open Graph / Twitter, JSON-LD) and a per-route <noscript> fallback
-// (real h1, headings, copy, internal links) baked into the raw HTML.
+// canonical, Open Graph / Twitter, JSON-LD) and per-route fallback content
+// (real h1, headings, copy, internal links) baked into #root as raw HTML.
 //
 // Why this exists: the app is a client-rendered SPA, so without prerendering the
 // raw HTML for every route is identical to the home page — same canonical, same
 // title, no per-page content. Non-rendering crawlers (e.g. Screaming Frog) then
 // see every sub-page "canonicalised" to the home page, and social scrapers (which
 // never run JS) show the home preview for every shared link. This step fixes both.
+//
+// The fallback lives directly in #root (not <noscript>) so word-count- and
+// readability-based tools that discount <noscript> still see real content. Because
+// main.jsx uses createRoot() (not hydrateRoot), React discards this markup and
+// renders the app over it on mount — it is a throwaway placeholder, like the home
+// hero shell. On the home page the fallback sits below the full-height hero, so it
+// never paints before React takes over (no layout shift, LCP unchanged).
 //
 // Runs automatically after `vite build` via the "postbuild" npm script. Every
 // substitution is asserted: if a future Vite version changes the emitted markup,
@@ -42,7 +49,7 @@ const replaceOnce = (html, re, fn, label) => {
 const setMetaContent = (html, idAttr, value, label) =>
   replaceOnce(html, new RegExp(`(<meta[^>]*${idAttr}[^>]*content=")[^"]*(")`, "g"), (_m, a, b) => a + escAttr(value) + b, label)
 
-// ---- per-route <noscript> fallback ---------------------------------------
+// ---- per-route #root fallback content ------------------------------------
 
 const primaryNav = `        <nav aria-label="Primary">
           <ul>
@@ -75,38 +82,41 @@ const sectionList = [
   .map(([href, name, desc]) => `            <li><a href="${href}">${name}</a> — ${desc}</li>`)
   .join("\n")
 
-const intro = `I'm a front-end web developer with 10+ years of experience building fast,
-          accessible, WCAG-compliant React interfaces. I focus on accessibility and
-          performance — semantic HTML, components that meet WCAG standards, and quick-loading
-          pages — and this portfolio collects the career-site work I've built for major brands,
-          each with a written case study covering the brief, the constraints, and what I shipped.`
+// Short, plain sentences on purpose: this copy is now visible (not in <noscript>),
+// so it feeds the readability score. Long, clause-heavy sentences read as "very
+// difficult"; splitting them keeps the same meaning and lifts the score.
+const intro = `I'm a front-end web developer with 10+ years of experience. I build fast,
+          accessible React interfaces that meet WCAG standards. My focus is accessibility and
+          performance: clean semantic HTML, components everyone can use, and pages that load
+          quickly. This portfolio collects the career-site work I've built for major brands.
+          Each project has a short case study covering the brief, the constraints, and what I shipped.`
 
-// h1 mirrors the rendered hero so the non-JS H1 differs from the <title> (and
-// matches what JS-rendering crawlers and users see). No <h1> here: the home page's
-// h1 lives in the static #root LCP shell (injected below), so adding one here too
-// would give the raw HTML two h1s. Other routes keep their noscript h1 (empty #root).
-const homeNoscript = () => `<noscript>
+// No <h1> here: the home page's h1 lives in the static #root LCP shell (prepended
+// below), so adding one here too would give the page two h1s. The shell's h1 comes
+// first in source order, so the H1 precedes these H2s (sequential). H2 text is kept
+// unique across every route so no two pages share an H2.
+const homeFallback = () => `<div class="prerender-fallback">
       <header>
         <p>${intro}</p>
 ${primaryNav}
       </header>
       <main>
         <section aria-labelledby="case-studies-heading">
-          <h2 id="case-studies-heading">Case studies</h2>
+          <h2 id="case-studies-heading">Featured case studies</h2>
           <ul>
 ${caseStudyListDetailed}
           </ul>
         </section>
         <section aria-labelledby="sections-heading">
-          <h2 id="sections-heading">Sections</h2>
+          <h2 id="sections-heading">Portfolio sections</h2>
           <ul>
 ${sectionList}
           </ul>
         </section>
       </main>
-    </noscript>`
+    </div>`
 
-const sitemapNoscript = `<noscript>
+const sitemapFallback = `<div class="prerender-fallback">
       <header>
         <h1>Site Map</h1>
         <p>${intro}</p>
@@ -114,25 +124,28 @@ ${primaryNav}
       </header>
       <main>
         <section aria-labelledby="sections-heading">
-          <h2 id="sections-heading">Sections</h2>
+          <h2 id="sections-heading">Site sections</h2>
           <ul>
 ${sectionList}
           </ul>
         </section>
         <section aria-labelledby="case-studies-heading">
-          <h2 id="case-studies-heading">Case studies</h2>
+          <h2 id="case-studies-heading">All case studies</h2>
           <ul>
 ${caseStudyListDetailed}
           </ul>
         </section>
       </main>
-    </noscript>`
+    </div>`
 
 // Emit the full case-study narrative (overview, challenges, solutions, lessons)
 // as real text, so the raw HTML is a genuine text version of the rendered page.
 const para = (label, text) => `        <p>${label ? `<strong>${escText(label)}.</strong> ` : ""}${escText(text)}</p>`
 
-const projectNoscript = project => {
+// The narrative uses <strong>-labelled paragraphs (not headings) on purpose: the
+// only heading below the h1 is the "More case studies" nav, and its text embeds the
+// project title so it stays unique across all case-study pages (no duplicate H2s).
+const projectFallback = project => {
   const cs = project.caseStudy || {}
   const body = [
     cs.overview ? para("", cs.overview) : "",
@@ -143,7 +156,7 @@ const projectNoscript = project => {
     .filter(Boolean)
     .join("\n")
 
-  return `<noscript>
+  return `<div class="prerender-fallback">
       <header>
         <h1>${escText(project.title)}</h1>
         <p>${escText(project.description)}</p>
@@ -152,20 +165,20 @@ ${primaryNav}
       <main>
 ${body}
         <section aria-labelledby="more-heading">
-          <h2 id="more-heading">More case studies</h2>
+          <h2 id="more-heading">More case studies besides ${escText(project.title)}</h2>
           <ul>
 ${caseStudyList}
           </ul>
         </section>
         <p><a href="/#projects">Back to all projects</a></p>
       </main>
-    </noscript>`
+    </div>`
 }
 
-const noscriptFor = route => {
-  if (route.kind === "home") return homeNoscript()
-  if (route.kind === "sitemap") return sitemapNoscript
-  return projectNoscript(route.project)
+const fallbackFor = route => {
+  if (route.kind === "home") return homeFallback()
+  if (route.kind === "sitemap") return sitemapFallback
+  return projectFallback(route.project)
 }
 
 // ---- LCP shell -----------------------------------------------------------
@@ -178,6 +191,8 @@ const noscriptFor = route => {
 // with the tagline/button kept as opacity-0 (no animation) purely to reserve the
 // same vertical space so the <h1> doesn't shift when React takes over. The <h1>
 // itself carries no opacity/animation, so it is a valid LCP candidate immediately.
+// The tagline text must stay identical to HeroSection.jsx (both wrap the same, so
+// no shift). It is short/plain because it now feeds the home page's readability score.
 const homeShell = `<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4">
       <div class="container max-w-4xl mx-auto text-center z-10">
         <div class="space-y-6">
@@ -186,7 +201,7 @@ const homeShell = `<section id="hero" class="relative min-h-screen flex flex-col
             <span class="text-primary"> Josh</span>
             <span class="text-gradient"> Wachsman</span>
           </h1>
-          <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0">I build modern, accessible, and performant web interfaces using current front-end technologies, delivering experiences that meet WCAG standards and emphasize usability.</p>
+          <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto opacity-0">I build fast, accessible web interfaces with modern front-end tools. My focus is usability and WCAG standards, so the results work well for everyone.</p>
           <div class="pt-4 opacity-0"><a href="#projects" class="primary-button">View My Work</a></div>
         </div>
       </div>
@@ -221,13 +236,12 @@ const render = (template, route) => {
     html = replaceOnce(html, /\s*<\/head>/, () => "\n" + block, "json-ld insertion point (</head>)")
   }
 
-  html = replaceOnce(html, /<!-- PRERENDER:NOSCRIPT -->/g, () => noscriptFor(route), "noscript marker")
-
-  // Inject the static LCP shell into #root for the home page (other routes keep
-  // an empty #root — their content is client-rendered as before).
-  if (route.kind === "home") {
-    html = replaceOnce(html, /<div id="root"><\/div>/g, () => `<div id="root">${homeShell}</div>`, "#root (home shell)")
-  }
+  // Inject static, crawlable content into #root. The home page paints its LCP hero
+  // shell first, then its fallback (which sits below the full-height hero, so it is
+  // never visible before React mounts). Other routes get their fallback directly.
+  // createRoot() discards all of this on mount and renders the app over it.
+  const rootInner = route.kind === "home" ? homeShell + fallbackFor(route) : fallbackFor(route)
+  html = replaceOnce(html, /<div id="root"><\/div>/g, () => `<div id="root">${rootInner}</div>`, "#root content")
 
   return html
 }
