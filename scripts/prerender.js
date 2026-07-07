@@ -200,6 +200,7 @@ const render = (template, route) => {
 
   html = replaceOnce(html, /(<title>)[^<]*(<\/title>)/g, (_m, a, b) => a + escText(meta.title) + b, "title")
   html = setMetaContent(html, 'name="description"', meta.description, "description")
+  html = setMetaContent(html, 'name="keywords"', meta.keywords, "keywords")
   html = replaceOnce(html, /(<link rel="canonical" href=")[^"]*(")/g, (_m, a, b) => a + escAttr(meta.canonical) + b, "canonical")
 
   html = setMetaContent(html, 'property="og:title"', meta.title, "og:title")

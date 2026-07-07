@@ -17,6 +17,27 @@ export const DEFAULT_TITLE = "Josh Wachsman — Accessible Front-End React Devel
 export const DEFAULT_DESCRIPTION =
   "Front-end web developer with 10+ years building fast, accessible, WCAG-compliant React interfaces for AT&T, Dell, UPS, Petco and Santander."
 
+// Meta keywords. Google ignores this tag, but Bing and other engines still read
+// it, so we keep a tight, relevant list per route (no stuffing) rather than omit
+// it. Site-wide defaults for the home and sitemap pages; case studies derive
+// theirs from the project's real tag stack below.
+export const DEFAULT_KEYWORDS = [
+  "Josh Wachsman",
+  "front-end developer",
+  "React developer",
+  "web accessibility",
+  "accessible web development",
+  "WCAG",
+  "web performance",
+  "JavaScript",
+  "HTML",
+  "CSS",
+  "SCSS",
+  "Tailwind CSS",
+  "career site developer",
+  "portfolio"
+].join(", ")
+
 // Screaming Frog / SERP limits we keep meta within.
 export const TITLE_MAX = 60
 export const DESCRIPTION_MAX = 155
@@ -43,6 +64,11 @@ const caseStudyDescription = project => {
   const full = `${project.title} — ${project.description}`
   return len(full) <= DESCRIPTION_MAX ? full : `${[...full].slice(0, DESCRIPTION_MAX - 1).join("")}…`
 }
+
+// Per-project keywords: the project's actual tech stack plus the terms that place
+// the page (its name, that it's a career-site case study, and the site owner).
+const caseStudyKeywords = project =>
+  [project.title, ...project.tags, "career site", "front-end developer", "case study", "Josh Wachsman"].join(", ")
 
 // CreativeWork (the case study itself) + a BreadcrumbList (Home › Projects › this
 // page). Breadcrumbs can render as a breadcrumb trail in Google results, which
@@ -87,6 +113,7 @@ const caseStudyMeta = project => ({
   path: `/projects/${project.slug}`,
   title: titleFor(project.title),
   description: caseStudyDescription(project),
+  keywords: caseStudyKeywords(project),
   canonical: canonicalFor(`/projects/${project.slug}`),
   ogImage: `${ORIGIN}${project.image}`,
   jsonLd: caseStudyJsonLd(project)
@@ -96,6 +123,7 @@ const homeMeta = () => ({
   path: "/",
   title: DEFAULT_TITLE,
   description: DEFAULT_DESCRIPTION,
+  keywords: DEFAULT_KEYWORDS,
   canonical: canonicalFor("/"),
   ogImage: OG_IMAGE,
   jsonLd: profilePageJsonLd()
@@ -105,6 +133,7 @@ const sitemapMeta = () => ({
   path: "/sitemap",
   title: "Site Map — Josh Wachsman Portfolio",
   description: "Browse every section and case study on Josh Wachsman's portfolio site.",
+  keywords: DEFAULT_KEYWORDS,
   canonical: canonicalFor("/sitemap"),
   ogImage: OG_IMAGE,
   jsonLd: null
