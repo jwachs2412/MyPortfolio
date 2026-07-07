@@ -93,22 +93,22 @@ const intro = `I'm a front-end web developer with 10+ years of experience. I bui
 
 // No <h1> here: the home page's h1 lives in the static #root LCP shell (prepended
 // below), so adding one here too would give the page two h1s. The shell's h1 comes
-// first in source order, so the H1 precedes these H2s (sequential). H2 text is kept
-// unique across every route so no two pages share an H2.
+// first in source order, so the H1 precedes this H2 (sequential). Every fallback has
+// exactly ONE H2 (sub-groups use <strong>, not headings) to avoid SF's "H2 Multiple",
+// and each H2's text is unique across routes so no two pages share an H2.
 const homeFallback = () => `<div class="prerender-fallback">
       <header>
         <p>${intro}</p>
 ${primaryNav}
       </header>
       <main>
-        <section aria-labelledby="case-studies-heading">
-          <h2 id="case-studies-heading">Featured case studies</h2>
+        <section aria-labelledby="explore-heading">
+          <h2 id="explore-heading">Explore this portfolio</h2>
+          <p><strong>Featured case studies</strong></p>
           <ul>
 ${caseStudyListDetailed}
           </ul>
-        </section>
-        <section aria-labelledby="sections-heading">
-          <h2 id="sections-heading">Portfolio sections</h2>
+          <p><strong>Portfolio sections</strong></p>
           <ul>
 ${sectionList}
           </ul>
@@ -123,14 +123,13 @@ const sitemapFallback = `<div class="prerender-fallback">
 ${primaryNav}
       </header>
       <main>
-        <section aria-labelledby="sections-heading">
-          <h2 id="sections-heading">Site sections</h2>
+        <section aria-labelledby="everything-heading">
+          <h2 id="everything-heading">Everything on this site</h2>
+          <p><strong>Site sections</strong></p>
           <ul>
 ${sectionList}
           </ul>
-        </section>
-        <section aria-labelledby="case-studies-heading">
-          <h2 id="case-studies-heading">All case studies</h2>
+          <p><strong>Case studies</strong></p>
           <ul>
 ${caseStudyListDetailed}
           </ul>
@@ -143,8 +142,11 @@ ${caseStudyListDetailed}
 const para = (label, text) => `        <p>${label ? `<strong>${escText(label)}.</strong> ` : ""}${escText(text)}</p>`
 
 // The narrative uses <strong>-labelled paragraphs (not headings) on purpose: the
-// only heading below the h1 is the "More case studies" nav, and its text embeds the
-// project title so it stays unique across all case-study pages (no duplicate H2s).
+// only heading below the h1 is the case-studies nav, and its text embeds the project
+// title so it stays unique across all case-study pages (no duplicate H2s). Kept as
+// "Case studies besides <title>" (not "More case studies besides…") so even the
+// longest title (NVA, 45 chars) stays under SF's 70-char H2 limit — the assertConstraints
+// check below fails the build if any H2 ever crosses 70.
 const projectFallback = project => {
   const cs = project.caseStudy || {}
   const body = [
@@ -165,7 +167,7 @@ ${primaryNav}
       <main>
 ${body}
         <section aria-labelledby="more-heading">
-          <h2 id="more-heading">More case studies besides ${escText(project.title)}</h2>
+          <h2 id="more-heading">Case studies besides ${escText(project.title)}</h2>
           <ul>
 ${caseStudyList}
           </ul>
@@ -263,8 +265,39 @@ const routes = [
 
 mkdirSync(resolve(distDir, "projects"), { recursive: true })
 
-for (const route of routes) {
-  writeFileSync(route.out, render(template, route))
+// Rendered text of every H2 in an HTML string (entities decoded, so the length
+// matches what Screaming Frog measures). Only the #root fallback emits H2s.
+const h2Texts = html =>
+  [...html.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/gi)].map(m =>
+    m[1]
+      .replace(/<[^>]+>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/\s+/g, " ")
+      .trim()
+  )
+
+// Guard the Screaming Frog H2 fixes so they can't silently regress (e.g. a new
+// project with a very long title, or a fallback edit that adds a second H2): assert
+// each page has at most one H2, no H2 exceeds 70 chars, and no H2 repeats across pages.
+const assertH2Constraints = rendered => {
+  const seen = new Map()
+  for (const { out, html } of rendered) {
+    const h2s = h2Texts(html)
+    if (h2s.length > 1) throw new Error(`prerender: ${h2s.length} H2s in ${out} (SF "H2 Multiple"): ${JSON.stringify(h2s)}`)
+    for (const t of h2s) {
+      if ([...t].length > 70) throw new Error(`prerender: H2 over 70 chars in ${out} (SF "H2 Over 70"): "${t}" (${[...t].length})`)
+      if (seen.has(t)) throw new Error(`prerender: duplicate H2 "${t}" in ${out} and ${seen.get(t)} (SF "H2 Duplicate")`)
+      seen.set(t, out)
+    }
+  }
+}
+
+const rendered = routes.map(route => ({ out: route.out, html: render(template, route) }))
+assertH2Constraints(rendered)
+for (const { out, html } of rendered) {
+  writeFileSync(out, html)
 }
 
 console.log(`prerender: wrote ${routes.length} HTML files (home, sitemap, ${caseStudyProjects.length} case studies)`)
